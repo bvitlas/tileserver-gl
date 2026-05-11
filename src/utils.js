@@ -380,7 +380,7 @@ export function fixTileJSONCenter(tileJSON) {
 }
 
 export const DEFAULT_MAPPINEST_TILEJSON_ATTRIBUTION =
-  '<a href="https://www.mappinest.com/legal/terms" target="_blank">© Mappinest</a>';
+  '<a href="https://www.mappinest.com/services" target="_blank">© Mappinest</a>';
 
 /**
  * Gets the default attribution appended to data TileJSON metadata.
