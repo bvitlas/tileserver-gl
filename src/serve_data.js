@@ -15,6 +15,7 @@ import {
   isValidRemoteUrl,
   fetchTileData,
   lonLatToTilePixel,
+  mergeTilejsonAttribution,
 } from './utils.js';
 import { getPMtilesInfo, openPMtiles } from './pmtiles_adapter.js';
 import { gunzipP, gzipP } from './promises.js';
@@ -607,6 +608,8 @@ export const serve_data = {
     if (options.dataDecoratorFunc) {
       tileJSON = options.dataDecoratorFunc(id, 'tilejson', tileJSON);
     }
+
+    tileJSON.attribution = mergeTilejsonAttribution(tileJSON.attribution);
 
     // Determine sparse: per-source overrides global, then format-based default
     // sparse=true -> 404 (allows overzoom)

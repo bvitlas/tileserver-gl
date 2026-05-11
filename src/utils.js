@@ -379,6 +379,40 @@ export function fixTileJSONCenter(tileJSON) {
   }
 }
 
+export const DEFAULT_MAPPINEST_TILEJSON_ATTRIBUTION =
+  '<a href="https://www.mappinest.com/legal/terms" target="_blank">© Mappinest</a>';
+
+/**
+ * Gets the default attribution appended to data TileJSON metadata.
+ * @returns {string} The configured or fallback attribution HTML.
+ */
+export function getDefaultTilejsonAttribution() {
+  return (
+    process.env.DEFAULT_TILEJSON_ATTRIBUTION ||
+    DEFAULT_MAPPINEST_TILEJSON_ATTRIBUTION
+  );
+}
+
+/**
+ * Merges Mappinest attribution into existing TileJSON attribution.
+ * @param {unknown} existing - Existing TileJSON attribution value.
+ * @returns {string} The merged attribution.
+ */
+export function mergeTilejsonAttribution(existing) {
+  const mappinestAttribution = getDefaultTilejsonAttribution();
+  const current = typeof existing === 'string' ? existing.trim() : '';
+
+  if (/mappinest\.com|Mappinest/i.test(current)) {
+    return current;
+  }
+
+  if (!current) {
+    return mappinestAttribution;
+  }
+
+  return `${current}, ${mappinestAttribution}`;
+}
+
 /**
  * Reads a file and returns a Promise with the file data.
  * @param {string} filename - Path to the file to read.

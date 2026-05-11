@@ -74,4 +74,15 @@ describe('Metadata', function () {
 
   testTileJSON('/styles/test-style.json');
   testTileJSON('/data/openmaptiles.json');
+
+  describe('/data/openmaptiles.json attribution', function () {
+    it('includes Mappinest attribution', function (done) {
+      supertest(app)
+        .get('/data/openmaptiles.json')
+        .expect(function (res) {
+          expect(res.body.attribution).to.contain('Mappinest');
+        })
+        .end(done);
+    });
+  });
 });
