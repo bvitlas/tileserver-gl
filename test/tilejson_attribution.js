@@ -36,7 +36,7 @@ describe('mergeTilejsonAttribution', function () {
 
   it('does not duplicate existing Mappinest attribution', function () {
     const attribution =
-      '© OpenStreetMap, <a href="https://www.mappinest.com/services" target="_blank">© Mappinest</a>';
+      '© OpenStreetMap, <a href="https://www.mappinest.com" target="_blank">© Mappinest</a>';
 
     expect(mergeTilejsonAttribution(attribution)).to.equal(attribution);
   });
@@ -50,3 +50,4 @@ describe('mergeTilejsonAttribution', function () {
     );
   });
 });
+
