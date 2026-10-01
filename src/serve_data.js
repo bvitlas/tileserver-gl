@@ -120,9 +120,12 @@ export const serve_data = {
 
       let data = fetchTile.data;
       let headers = fetchTile.headers;
-      let isGzipped = data.slice(0, 2).indexOf(Buffer.from([0x1f, 0x8b])) === 0;
+      const isGzipped =
+        data.slice(0, 2).indexOf(Buffer.from([0x1f, 0x8b])) === 0;
+      const serveGzipped =
+        isGzipped && format === 'pbf' && !options.dataDecoratorFunc;
 
-      if (isGzipped) {
+      if (isGzipped && !serveGzipped) {
         data = await gunzipP(data);
       }
 
@@ -166,7 +169,9 @@ export const serve_data = {
       headers['Content-Encoding'] = 'gzip';
       res.set(headers);
 
-      data = await gzipP(data);
+      if (!serveGzipped) {
+        data = await gzipP(data);
+      }
 
       return res.status(200).send(data);
     });
